@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 import Storage from '../utils/Storage';
 
 const Header = ({ navigation, haveSearch }) => {
-  const [searchVisible, setSearchVisible] = useState(true);
+  const [searchVisible, setSearchVisible] = useState(false);
   const [nameUser, setNameUser] = useState('');
 
   useEffect(() => {
@@ -34,16 +34,14 @@ const Header = ({ navigation, haveSearch }) => {
           <Text style={styles.headerText}>{nameUser}</Text>
         </View>
         {haveSearch && (
-          <View>
-            <Ionicons
-              onPress={() => {
-                setSearchVisible(!searchVisible);
-              }}
-              name="md-search"
-              size={24}
-              color="black"
-            />
-          </View>
+          <Ionicons
+            onPress={() => {
+              setSearchVisible(!searchVisible);
+            }}
+            name="md-search"
+            size={24}
+            color="black"
+          />
         )}
       </View>
       {searchVisible && <SearchBar />}
