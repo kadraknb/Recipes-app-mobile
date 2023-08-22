@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './page/Login';
-import FoodsScreen from './page/FoodsScreen';
+import RecipesList from './page/RecipesList';
 import AppProvider from './context/AppProvider';
 // import DetailsScreen from './page/outrapage';
 // Profile
@@ -16,8 +16,8 @@ const Router = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Foods" component={FoodsScreen} />
-          {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
+          <Stack.Screen name="Foods" component={RecipesList} />
+          <Stack.Screen name="Drinks" component={RecipesList} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
