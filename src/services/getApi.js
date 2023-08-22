@@ -1,14 +1,24 @@
 export default class GetApi {
   END_POINT = String();
-  LIMIT = Number();
 
-  // get por busca
+  // get por receitas
+  static recipes = async (boo) => {
+    try {
+      this._makeEndPoint(boo, 'search', 's', '');
+      const data = await this._fetchProcessed();
+      console.log("🚀 ~ recipes= ~ data:", data);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return Error();
+    }
+  };
+  // get receitas por busca
   static recipesBySearch = async (boo, searchFor, search) => {
     try {
       const TYPE = searchFor === 'i' ? 'filter' : 'search';
-      this.LIMIT = 12;
       this._makeEndPoint(boo, TYPE, searchFor, search);
-      const data = await this._fetchLimited();
+      const data = await this._fetchProcessed();
       return data;
     } catch (error) {
       console.error(error);
@@ -18,9 +28,8 @@ export default class GetApi {
   // pega receitas por categoria
   static recipesByCategory = async (boo, category) => {
     try {
-      this.LIMIT = 12;
       this._makeEndPoint(boo, 'filter', 'c', category);
-      const data = await this._fetchLimited();
+      const data = await this._fetchProcessed();
       return data;
     } catch (error) {
       console.error(error);
@@ -31,9 +40,8 @@ export default class GetApi {
   // pega as categorias
   static categories = async (boo) => {
     try {
-      this.LIMIT = 5;
       this._makeEndPoint(boo, 'list', 'c', 'list');
-      const data = await this._fetchLimited();
+      const data = await this._fetchProcessed();
       return [{ strCategory: 'all' }, ...data];
     } catch (error) {
       console.error(error);
@@ -45,17 +53,11 @@ export default class GetApi {
     const host = boo ? 'thecocktaildb' : 'themealdb';
     this.END_POINT = `https://www.${host}.com/api/json/v1/1/${type}.php?${searchFor}=${search}`;
   };
-  // limite de quantidade
-  static _limiteArr = (obj) => Object.values(obj)[0].slice(0, this.LIMIT);
+
   // pega a api  e trata
   static _fetchProcessed = async () => {
     const res = await fetch(this.END_POINT);
     const data = await res.json();
-    return data;
-  };
-  // pega a api com limite de quantidade
-  static _fetchLimited = async () => {
-    const data = await this._fetchProcessed();
-    return this._limiteArr(data);
+    return Object.values(data)[0];
   };
 }
