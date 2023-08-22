@@ -2,28 +2,23 @@ import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Button, TextInput } from 'react-native';
 import RadioButton from './RadioButton';
 import { useRoute } from '@react-navigation/native';
-import getSearchApi from '../services/getSearchApi';
 import AppContext from '../context/AppContext';
+import GetApi from '../services/getApi';
 
 const SearchBar = () => {
-  const { setRecipes } = useContext(AppContext);
+  const { setRecipesUpdate } = useContext(AppContext);
   const [search, setSearch] = useState('');
   const [searchFor, setSelectedOption] = useState('s');
-  
-  const pageDrinks = useRoute().name === 'Drinks'
+
+  const pageDrinks = useRoute().name === 'Drinks';
   const option = [
     { label: 'Name', value: 's' },
     { label: 'Ingredient', value: 'i' },
     { label: 'First letter', value: 'f' },
   ];
-  
+
   const getSearchInApi = async () => {
-    const data = await getSearchApi({
-      searchFor,
-      search,
-      pageDrinks,
-    });
-    setRecipes(data)
+    setRecipesUpdate(await GetApi.search(pageDrinks, searchFor, search));
   };
 
   return (

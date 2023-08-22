@@ -6,7 +6,7 @@ import AppContext from '../context/AppContext';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const { setRecipes } = useContext(AppContext);
+  const { setRecipesUpdate } = useContext(AppContext);
   const pageIsDrinks = useRoute().name === 'Drinks';
 
   useEffect(() => {
@@ -16,12 +16,12 @@ const Categories = () => {
 
   const getCategories = async () => {
     const data = await GetApi.categories(pageIsDrinks);
-    setCategories(data);
+    setCategories(data.slice(0, 6));
   };
 
   const setRecipesByCategory = async (category) => {
     const data = await GetApi.recipesByCategory(pageIsDrinks ,category)
-    setRecipes(data)
+    setRecipesUpdate(data)
   };
 
   return (
