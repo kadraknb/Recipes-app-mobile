@@ -1,26 +1,27 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import Formatter from '../utils/Formatter';
 
 const Card = ({ recipe, pageIsDrinks }) => {
-  const { idMeal, idDrink, strMealThumb, strDrinkThumb, strMeal, strDrink } =
-    recipe;
+  const { id, name, thumb } = Formatter.recipeCard(recipe, pageIsDrinks);
   const navigation = useNavigation();
   const goToDetailRecipe = () => {
-    const pathname = pageIsDrinks ? '/Foods/' : '/Drinks/';
-    navigation.navigate(`${pathname}${pageIsDrinks ? idDrink : idMeal}`);
+    navigation.navigate('RecipesDetail', { recipeId: id });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={goToDetailRecipe}>
-      <View>
-        <Image
-          style={{ width: 200, height: 200 }}
-          source={pageIsDrinks ? strDrinkThumb : strMealThumb}
-        />
-        <Text>{pageIsDrinks ? strDrink : strMeal}</Text>
-      </View>
-    </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={goToDetailRecipe}>
+        <View>
+          <Image style={{ width: 100, height: 100 }} source={{ uri: thumb }} />
+          <Text>{name}</Text>
+        </View>
+      </TouchableWithoutFeedback>
   );
 };
 
