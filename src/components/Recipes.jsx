@@ -9,6 +9,8 @@ import { useRoute } from '@react-navigation/native';
 const Recipes = () => {
   const { recipesUpdate } = useContext(AppContext);
   const [ recipes, setRecipes ] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const pageIsDrinks = useRoute().name === 'Drinks';
 
   useEffect(() => {
@@ -24,14 +26,15 @@ const Recipes = () => {
   const getRecipes = async () => {
     const data = await GetApi.recipes(pageIsDrinks);
     setRecipes(data);
+    setLoading(true)
   };
 
   return (
     <View>
       <Categories />
-      {recipes.length &&
+      {loading &&
         recipes.map((recipe) => (
-          <Card key={Object.values(recipe)[0]} recipe={recipe} pageIsDrinks={pageIsDrinks} />
+          <Card key={Object.values(recipe)[0] + 'card'} recipe={recipe} pageIsDrinks={pageIsDrinks} />
         ))}
     </View>
   );
