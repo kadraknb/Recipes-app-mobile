@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import GetApi from '../services/getApi';
-import Formatter from '../utils/Formatter';
 import { useRoute } from '@react-navigation/native';
-import RecommendCarousel from '../components/RecommendCarousel';
+import AppContext from '../context/AppContext';
+import CardDetail from '../components/CardDetail';
+// import RecommendCarousel from '../components/RecommendCarousel';
 
-const RecipesDetail = ({ isDrinks }) => {
+const RecipesDetail = () => {
   const [recipe, setRecipe] = useState({});
   const [loading, setLoading] = useState(false);
-  const route = useRoute();
-  const { recipeId } = route.params;
+  const {isDrinkPage} = useContext(AppContext);
+
+  const { recipeId } = useRoute().params;
 
   useEffect(() => {
     getRecipe();
@@ -17,7 +19,7 @@ const RecipesDetail = ({ isDrinks }) => {
   }, []);
 
   const getRecipe = async () => {
-    const data = await GetApi.recipesById(isDrinks, recipeId);
+    const data = await GetApi.recipesById(isDrinkPage, recipeId);
     setRecipe(data);
     setLoading(true)
   };
@@ -26,11 +28,7 @@ const RecipesDetail = ({ isDrinks }) => {
     <View>
       {loading && (
         <View>
-          <Image style={{ width: 200, height: 200 }} source={{ uri: recipe.thumb }} />
-          <View>
-            <Text>{recipe.name}</Text>
-          </View>
-          <Text>{recipe.category}</Text>
+          <CardDetail recipe={recipe} />
           <View>
           <Text>Ingredients</Text>
             {recipe.ingredient.map(( ingredient, i) => (
@@ -42,8 +40,9 @@ const RecipesDetail = ({ isDrinks }) => {
           <Text>Instructions</Text>
           <Text>{recipe.instructions}</Text>
           <Text>Video</Text>
-          {!isDrinks && <Text>{recipe.youtube}</Text>}
+          {!isDrinkPage && <Text>{recipe.youtube}</Text>}
           <RecommendCarousel />
+          <Button title="Start Recipe"/>
         </View>
       )}
     </View>
