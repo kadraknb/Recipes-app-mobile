@@ -4,7 +4,8 @@ import GetApi from '../services/getApi';
 import { useRoute } from '@react-navigation/native';
 import AppContext from '../context/AppContext';
 import CardDetail from '../components/CardDetail';
-// import RecommendCarousel from '../components/RecommendCarousel';
+import RecommendCarousel from '../components/RecommendCarousel';
+import GreeButton from '../components/Buttons/GreeButton';
 
 const RecipesDetail = () => {
   const [recipe, setRecipe] = useState({});
@@ -21,7 +22,7 @@ const RecipesDetail = () => {
   const getRecipe = async () => {
     const data = await GetApi.recipesById(isDrinkPage, recipeId);
     setRecipe(data);
-    setLoading(true)
+    setLoading(true);
   };
   
   return (
@@ -39,10 +40,9 @@ const RecipesDetail = () => {
           </View>
           <Text>Instructions</Text>
           <Text>{recipe.instructions}</Text>
-          <Text>Video</Text>
-          {!isDrinkPage && <Text>{recipe.youtube}</Text>}
+
           <RecommendCarousel />
-          <Button title="Start Recipe"/>
+          <GreeButton title="Start Recipe" newRota="RecipesProcess" recipeId={recipeId} />
         </View>
       )}
     </View>
