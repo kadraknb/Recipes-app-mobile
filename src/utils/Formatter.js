@@ -6,7 +6,6 @@ export default class Formatter {
       thumb: boo ? r.strDrinkThumb : r.strMealThumb,
       category: boo ? r.strAlcoholic : r.strCategory,
       instructions: r.strInstructions,
-      youtube: boo ? '' : r.strYoutube.replace('watch?v=', 'embed/'),
       ingredient: this.__transformArray(r, 'strIngredient'),
       measure: this.__transformArray(r, 'strMeasure'),
     };

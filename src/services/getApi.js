@@ -1,7 +1,7 @@
 import Formatter from '../utils/Formatter';
 
+
 export default class GetApi {
-  END_POINT = String();
 
   // get por receitas
   static recipes = async (boo) => {
@@ -20,7 +20,7 @@ export default class GetApi {
     try {
       const [data] = await this._fetchProcessed(
         this._makeEndPoint(boo, 'lookup', 'i', id)
-      );
+        );
       return Formatter.recipeDetail(data, boo);
     } catch (error) {
       console.error(error);
