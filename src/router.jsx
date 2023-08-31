@@ -9,6 +9,7 @@ import RecipesDetail from './page/RecipesDetail';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppContext from './context/AppContext';
+import RecipesProcess from './page/RecipesProcess';
 // import DetailsScreen from './page/outrapage';
 // Profile
 // Drinks
@@ -47,6 +48,7 @@ const Router = () => {
           {/* <Stack.Screen name="Drinks" component={RecipesList} /> */}
           {/* <Stack.Screen name="RecipesInProgress" component={RecipesList} /> */}
           <Stack.Screen name="RecipesDetail" component={RecipesDetail} />
+          <Stack.Screen name="RecipesProcess" component={RecipesProcess} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
